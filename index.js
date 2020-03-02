@@ -7,7 +7,7 @@ const token = "TOKEN HERE";
 const prefix = "!";
 
 bot.on("ready", () => {
-  console.log("Bot Running Smooth!");
+  console.log("Bot Running Smooth ASF!");
 });
 
 bot.on("message", async msg => {
@@ -111,10 +111,22 @@ bot.on("message", async msg => {
       let volume = response.data;
       return volume;
     };
+    let getUSD = async () => {
+      let response = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+      );
+      let usd = response.data;
+      return usd;
+    };
     let volumeValue = await getVolume();
+    let usdValue = await getUSD();
+    let usdvolume =
+      Math.round(volumeValue.total_volume * usdValue.bitcoin.usd) / 100;
     console.log(volumeValue);
     msg.reply(
-      `Current AsymetrEX volume is: \n\n ${volumeValue.total_volume} BTC`
+      `Current AsymetrEX volume is: \n\n ${
+        volumeValue.total_volume
+      } BTC \n OR \n ${usdvolume} USD`
     );
   }
 });
