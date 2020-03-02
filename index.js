@@ -2,12 +2,12 @@ const Discord = require("discord.js");
 const axios = require("axios");
 const bot = new Discord.Client();
 
-const token = "TOKEN HERE";
+const token = "";
 
 const prefix = "!";
 
 bot.on("ready", () => {
-  console.log("Bot Running Smooth ASF!");
+  console.log("Bot Running Smooth!");
 });
 
 bot.on("message", async msg => {
@@ -45,6 +45,9 @@ bot.on("message", async msg => {
       }`
     );
   }
+
+  // Atheios
+
   if (command === "ath") {
     let getAth = async () => {
       let response = await axios.get(
@@ -53,12 +56,26 @@ bot.on("message", async msg => {
       let ath = response.data;
       return ath;
     };
+    let getUSD = async () => {
+      let response = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+      );
+      let usd = response.data;
+      return usd;
+    };
     let athValue = await getAth();
+    let usdValue = await getUSD();
+    let athusd = athValue.ticker.last * usdValue.bitcoin.usd;
     console.log(athValue);
     msg.reply(
-      `Atheios - ATH is currently trading for; \n\n ${athValue.ticker.last} BTC`
+      `Atheios - ATH is currently trading for: \n ${athusd} USD \n OR \n ${
+        athValue.ticker.last
+      } BTC`
     );
   }
+
+  // PERKLE
+
   if (command === "prkl") {
     let getPrkl = async () => {
       let response = await axios.get(
@@ -67,14 +84,26 @@ bot.on("message", async msg => {
       let prkl = response.data;
       return prkl;
     };
+    let getUSD = async () => {
+      let response = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+      );
+      let usd = response.data;
+      return usd;
+    };
     let prklValue = await getPrkl();
+    let usdValue = await getUSD();
+    let prklusd = prklValue.ticker.last * usdValue.bitcoin.usd;
     console.log(prklValue);
     msg.reply(
-      `Perkle - PRKL is currently trading for; \n\n ${
+      `Perkle - PRKL is currently trading for: \n ${prklusd} USD \n OR \n ${
         prklValue.ticker.last
       } BTC`
     );
   }
+
+  // Ubiq
+
   if (command === "ubq") {
     let getUbq = async () => {
       let response = await axios.get(
@@ -83,12 +112,26 @@ bot.on("message", async msg => {
       let ubq = response.data;
       return ubq;
     };
+    let getUSD = async () => {
+      let response = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+      );
+      let usd = response.data;
+      return usd;
+    };
     let ubqValue = await getUbq();
+    let usdValue = await getUSD();
+    let ubqusd = ubqValue.ticker.last * usdValue.bitcoin.usd;
     console.log(ubqValue);
     msg.reply(
-      `Ubiq - UBQ is currently trading for; \n\n ${ubqValue.ticker.last} BTC`
+      `Ubiq - UBQ is currently trading for; \n ${ubqusd} USD \n OR \n ${
+        ubqValue.ticker.last
+      } BTC`
     );
   }
+
+  // Ether-1
+
   if (command === "etho") {
     let getEtho = async () => {
       let response = await axios.get(
@@ -97,14 +140,26 @@ bot.on("message", async msg => {
       let etho = response.data;
       return etho;
     };
+    let getUSD = async () => {
+      let response = await axios.get(
+        "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
+      );
+      let usd = response.data;
+      return usd;
+    };
     let ethoValue = await getEtho();
+    let usdValue = await getUSD();
+    let ethousd = ethoValue.ticker.last * usdValue.bitcoin.usd;
     console.log(ethoValue);
     msg.reply(
-      `Ether-1 - ETHO is currently trading for; \n\n ${
+      `Ether-1 - ETHO is currently trading for: \n ${ethousd} USD \n OR \n ${
         ethoValue.ticker.last
       } BTC`
     );
   }
+
+  // Volume
+
   if (command === "volume") {
     let getVolume = async () => {
       let response = await axios.get("https://asymetrex.com/api/");
@@ -126,9 +181,10 @@ bot.on("message", async msg => {
     msg.reply(
       `Current AsymetrEX volume is: \n\n ${
         volumeValue.total_volume
-      } BTC \n OR \n ${usdvolume} USD`
+      } BTC \n ${usdvolume} USD (Second Bot)`
     );
   }
 });
 
 bot.login(token);
+
