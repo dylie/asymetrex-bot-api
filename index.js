@@ -10,10 +10,6 @@ bot.on("ready", () => {
   console.log("Bot Running Smooth!");
 });
 
-bot.on("ready", () => {
-  console.log("Bot Running Smooth!");
-});
-
 bot.on("message", async msg => {
   if (!msg.content.startsWith(prefix)) {
     return;
